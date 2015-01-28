@@ -1,2 +1,12 @@
 _site
 .DS_Store
+
+*.iml
+.name
+compiler.xml
+encodings.xml
+misc.xml
+modules.xml
+profiles_settings.xml
+scope_settings.xml
+vcs.xml
