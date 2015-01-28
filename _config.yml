@@ -1,6 +1,6 @@
 name: mdulac
 markdown: redcarpet
-pygments: true
+highlighter: true
 
 asciidoc: asciidoctor
 asciidoc_ext: asciidoc,adoc,ad
