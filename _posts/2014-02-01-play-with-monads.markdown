@@ -5,7 +5,7 @@ date:   2014-02-01
 categories: functionnal programming monads
 ---
 
-Si tu as déjà touché à la programmation fonctionnelle, tu as probablement entendu parler de la notion de `monade`. Il existe pléthore d'articles sur Internet couvrant les monades, mais beaucoup d'entre eux sont teintés de notions mathématiques, plus précisément de théorie des catégories.
+Si tu as déjà touché à la programmation fonctionnelle, tu as probablement entendu parler de la notion de `monade`. Il existe pléthore d'articles sur Internet couvrant les monades, mais beaucoup d'entre eux sont teintés de notions mathématiques, et plus précisément de théorie des catégories.
 
 Pour définir la notion de monade en deux mots : `contexte` et `composition`.
 
@@ -66,19 +66,21 @@ doublePositive 3 >>= doublePositive -- returns Just 12
 
 Tu viens d'appliquer la fonction `doublePositive` à `Just Int` ! Tu peux évidemment appliquer toute fonction de type Int -> Maybe Int !
 
+Le prototype de la fonction `>>=` étant `M a -> (a -> M b) -> M b`, tu peux évidemment transformer ton Int en String, ou en tout autre type !
+
 {% highlight haskell %}
 doublePositive 1 >>= doublePositive >>= doublePositive -- returns Just 8
 doublePositive -4 >>= doublePositive >>= doublePositive -- returns Nothing
 doublePositive 3 >>= ( \x -> return (x - 2) ) -- returns Just 4
 doublePositive 3 >>= ( \x -> return (x - 10) ) >>= doublePositive -- returns Nothing
 doublePositive 4 >>= ( \x -> return (show x) ) -- returns Just "8"
-doublePositive 4 >>= ( \x -> return ("Hello" ++ show x) ) -- returns Just "hello 8"
+doublePositive 4 >>= ( \x -> return ("Hello " ++ show x) ) -- returns Just "hello 8"
 {% endhighlight %}
 
-Le prototype de la fonction `>>=` étant `M a -> (a -> M b) -> M b`, tu peux évidemment transformer ton Int en String, ou en tout autre type !
+Les fonctions sont donc maintenant composables les unes avec les autres.
 
 # Et la monade dans tout ça ?
-Tu viens de voir que `Maybe a` est une monade _parmi d'autres_. Les deux fonctions `return` et `>>=` que l'on vient d'utiliser sont disponibles pour toutes les monades. Haskell dispose d'un `typeclass` `Monad` qui t'oblige à définir ces fonctions si tu instancies `Monad` (_Maybe est une instance de Monad, donc implémente ces fonctions_).
+Tu viens de voir que `Maybe a` est une monade _parmi d'autres_. Les deux fonctions `return` et `>>=` que l'on vient d'utiliser sont disponibles pour toutes les monades. Haskell dispose d'un `typeclass` `Monad` qui t'oblige à définir ces fonctions si tu dérives `Monad` (_Maybe est une instance de Monad, donc implémente ces fonctions_).
 
 {% highlight haskell %}
 class Monad Maybe where
@@ -88,30 +90,30 @@ class Monad Maybe where
 		_ = Nothing
 {% endhighlight %}
 
-Tu dois savoir que pour être une monade, un type doit respecter trois conditions :
+Tu dois savoir que pour être une monade, un type doit respecter trois lois :
 
-- `return x >>= f` est équivalent à `f x`
-- `m >>= return` est équivalent à `m`
-- `(m >>= f) >>= g` est équivalent à `m >>= (\x -> f x >>= g)`
+- _Composition neutre par return à gauche_ : `return x >>= f` est équivalent à `f x`
+- _Composition neutre par return à droite_ : `m >>= return` est équivalent à `m`
+- _Associativité_ : `(m >>= f) >>= g` est équivalent à `m >>= (\x -> f x >>= g)`
 
 `Maybe` couvre ces trois conditions :
 {% highlight haskell %}
--- Rule 1
+-- Composition neutre par return à gauche
 let f = ( \x -> return (x + 5) )
 return 5 >>= f -- returns Just 10
 f 5 -- returns Just 10
 
--- Rule 2
+-- Composition neutre par return à droite
 Just 5 >>= return -- returns Just 5
 
--- Rule 3
+-- Associativité
 let f = ( \x -> return (x + 5) )
 let g = ( \x -> return (x + 10) )
-(Just 5 >> f) >> g -- returns Just 20
-Just 5 >>= ( \x -> f >>= g ) -- returns Just 20
+(Just 5 >>= f) >>= g -- returns Just 20
+Just 5 >>= ( \x -> f x >>= g ) -- returns Just 20
 {% endhighlight %}
 
-Si tu veux en savoir plus sur Maybe, je te conseille de visiter le site [Hoogle][hoogle], et plus particulièrement la page sur le type [Maybe][hoogle-maybe].
+Si tu veux en savoir plus sur Maybe, je te conseille de visiter le site [Hoogle][hoogle], et plus particulièrement la page dédiée au type [Maybe][hoogle-maybe].
 
 [hoogle]: http://www.haskell.org/hoogle/
 [hoogle-maybe]: http://hackage.haskell.org/package/base-4.6.0.1/docs/Prelude.html#t:Maybe
