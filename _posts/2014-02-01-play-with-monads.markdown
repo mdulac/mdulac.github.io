@@ -2,12 +2,12 @@
 layout: post
 title:  'Play with Maybe "monads !"'
 date:   2014-02-01
-categories: functionnal programming monads
+categories: functionnal programming monad monads composition function functions
 ---
 
-Si tu as déjà touché à la programmation fonctionnelle, tu as probablement entendu parler de la notion de `monade`. Il existe pléthore d'articles sur Internet couvrant les monades, mais beaucoup d'entre eux sont teintés de notions mathématiques, et plus précisément de théorie des catégories.
+Si tu as déjà touché à la programmation fonctionnelle, tu as probablement entendu parler de la notion de **Monade**. Il existe pléthore d'articles sur Internet couvrant les monades, mais beaucoup d'entre eux sont teintés de notions mathématiques, et plus précisément de théorie des catégories.
 
-Pour définir la notion de monade en deux mots : `contexte` et `composition`.
+Pour définir la notion de monade en deux mots : **Contexte** et **Composition**.
 
 _Les exemples de code qui suivent sont écrits en Haskell, un langage que j'affectionne particulièrement pour sa syntaxe concise, mais très expressive._
 
@@ -117,6 +117,3 @@ Si tu veux en savoir plus sur Maybe, je te conseille de visiter le site [Hoogle]
 
 [hoogle]: http://www.haskell.org/hoogle/
 [hoogle-maybe]: http://hackage.haskell.org/package/base-4.6.0.1/docs/Prelude.html#t:Maybe
-
-
-
