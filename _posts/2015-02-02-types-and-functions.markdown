@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  'Types, valeurs et fonctions dans la programmation fonctionnelle'
+title:  'Types, valeurs et fonctions pures dans la programmation fonctionnelle'
 date:   2014-02-05
 categories: functionnal programming type types value values function functions
 ---
@@ -69,5 +69,50 @@ if_then_else T (2 + 4) ("World")
 
 car les valeurs (2 + 3) et "World" ne sont pas du même type !
 
-#Et les fonctions dans tout ça ?
-_In progress_
+#Et les fonctions pures dans tout ça ?
+Une fonction pure est un traitement qui accepte un ou plusieurs arguments, et retourne une valeur en retour. La fonction ne pourra
+rien faire d'autre que manipuler les valeurs passées en paramètre. En d'autres termes, il lui sera impossible d'exploiter
+tout élement extérieur (IO, nombres aléatoires, ...), aussi appelé _effet de bord_.
+
+Les arguments passés à la fonction, et sa valeur de retour sont typés. Une fonction est donc typée !
+Ainsi :
+
+* une fonction qui accepte un entier en paramère et retourne un entier sera typée `Int -> Int`
+* une fonction qui accepte deux entiers, et retourne un entier sera typée `Int -> Int -> Int`
+* une fonction qui accepte une chaîne de caractères, et retourne un booléen sera typée `String -> Bool`
+* plus génériquement, une fonction qui accepte un `a`, et retourne un `b` sera typée `a -> b`
+
+J'écris avec toi une fonction `sum'` qui permet de sommer trois entiers passés en arguments. Cette fonction prendra trois paramètres
+de type entier et retournera une valeur du même type. Son type est donc `(Int -> Int -> Int) -> Int`, soit `Int -> Int -> Int -> Int`.
+Son implémentation sera :
+
+{% highlight haskell %}
+sum' :: Int -> Int -> Int -> Int
+sum' x y z = x + y + z
+{% endhighlight %}
+
+`x`, `y` et `z` sont des _variables_ (donc des valeurs !) de type `Int`. Elles sont ensuite additionnées et retournées. Tu viens d'écrire
+ta première fonction !
+Ces variables sont additionnables car elles sont de type `Int`.
+Maintenant imaginons une fonction générique d'association, qui permettrait d'additionner deux entiers, et de concatener deux chaînes 
+de caractères... Quel serait sont type ?
+
+Si tu as répondu "quelque chose de générique typé `a -> a -> a`", alors tu as raison ! Je rassure les déçus que `b -> b -> b` fonctionne
+également ! ;)
+
+`Toi` : "Et qu'en est-il de son implémentation ?"
+`Moi` : "Trouvons lui déjà un petit nom..."
+`Toi` : "J'aime beaucoup 'Bob'"
+`Moi` : "C'est pas mal, mais ça ne renseigne pas beaucoup sur ce que fait la fonction, non ?"
+`Toi` : "Alors que dis-tu de 'associate' ?"
+`Moi` : "Bien joué !"
+
+{% highlight haskell %}
+associate :: a -> a -> a
+associate x y = ???
+{% endhighlight %}
+
+Additionner deux entiers implique d'utiliser l'opérateur `+`, alors que concatener deux chaînes implique d'utiliser l'opérateur `++`.
+Comment faire ?
+
+Aller... je garde un peu de suspense, la réponse sera dévoilée en même temps que les Typeclass dans un prochain article :)
