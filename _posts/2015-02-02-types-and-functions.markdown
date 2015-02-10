@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  'Types, valeurs et fonctions pures dans la programmation fonctionnelle'
-date:   2014-02-05
+date:   2015-02-05
 categories: functionnal programming type types value values function functions
 ---
 
