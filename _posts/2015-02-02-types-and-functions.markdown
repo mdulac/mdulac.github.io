@@ -92,7 +92,7 @@ sum' x y z = x + y + z
 {% endhighlight %}
 
 `x`, `y` et `z` sont des _variables_ (donc des valeurs !) de type `Int`. Elles sont ensuite additionnées et retournées. Tu viens d'écrire
-ta première fonction !
+ta deuxième fonction !
 Ces variables sont additionnables car elles sont de type `Int`.
 Maintenant imaginons une fonction générique d'association, qui permettrait d'additionner deux entiers, et de concatener deux chaînes 
 de caractères... Quel serait sont type ?
